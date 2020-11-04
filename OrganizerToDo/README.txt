@@ -1,4 +1,6 @@
-Aplikacja posiada kilka g³ównych funkcji
-1.Kalendarz - mo¿liwoœæ wyboru dni oraz podgl¹du rzeczy do zrobienia.
-2.Stwórz zadanie - zadanie do zrobienia dodane do odpowiedniego dnia.
-3.Przegl¹d najbli¿szych zadañ do zrobienia, przegl¹d wszystkich zadañ w zale¿noœci od wybranego widoku
+Aplikacja posiada kilka gÅ‚Ã³wnych funkcji
+1.Kalendarz - moÅ¼liwoÅ›Ä‡ wyboru dnia/miesiÄ…ca oraz podglÄ…du rzeczy do zrobienia.
+2.StwÃ³rz zadanie - zadanie do zrobienia dodane do odpowiedniego dnia.
+3.Edycja/UsuniÄ™cie zadania 
+4.PrzeglÄ…d najbliÅ¼szych zadaÅ„ do zrobienia, przeglÄ…d wszystkich zadaÅ„ w zaleÅ¼noÅ›ci od wybranego widoku
+5.Logowanie/Rejestracja do kalendarza
