@@ -5,15 +5,18 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QMessageBox, QLineEdit
 
 from models.User import User
+from calendar import Calendar
 
-#ukrywanie hasla w QLineEdit nie dziala
-#haslo = QLineEdit()
-#haslo.setEchoMode(QLineEdit.Password)
+
+# ukrywanie hasla w QLineEdit nie dziala
+# haslo = QLineEdit()
+# haslo.setEchoMode(QLineEdit.Password)
 
 class Login(QDialog, loginUI):
 
     def __init__(self, parent=None):
         super(Login, self).__init__(parent)
+        self.calendar = Calendar()
         self.setupUi(self)
 
         self.loginbtn.clicked.connect(self.loginF)
@@ -29,10 +32,9 @@ class Login(QDialog, loginUI):
 
             print(f'Login : {login}\nHasło : {haslo}')
             print("Zalogowano!")
-            #nie zastepuje okna tylko otwiera nowe, zacina sie
-            from calendarMenu import CalendarMenu
-            calendar = CalendarMenu()
-            calendar.main()
+
+            self.calendar.showApp()
+            self.hide()
 
         else:
             msg = QMessageBox()
@@ -45,7 +47,6 @@ class Login(QDialog, loginUI):
     def exitF(self):
         print("Zamknięto aplikację")
         sys.exit(1)
-
 
 
 app = QApplication(sys.argv)
