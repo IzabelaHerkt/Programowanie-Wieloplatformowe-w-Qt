@@ -1,22 +1,29 @@
 import sys
 from datetime import datetime
 
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QDialog, QApplication, QWidget
-import calendar
-from PyQt5.QtCore import QDate
+from PyQt5.QtCore import QSize
+from PyQt5.uic.properties import QtWidgets
+
+from login import Login
+
+from PyQt5.QtWidgets import QDialog, QApplication, QWidget, QPushButton
 
 
-class CalendarMenu(QWidget):
-    global currentYear, currentMonth
+class CalendarMenu(QWidget, Login):
 
-    currentYear = datetime.now().year
-    currentMonth = datetime.now().month
+    #global currentYear, currentMonth
 
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle('Calendar')
+    #currentYear = datetime.now().year
+    #currentMonth = datetime.now().month
+
+    def __init__(self, parent=None):
+        super(CalendarMenu, self).__init__(parent)
+ 	self.setWindowTitle('Calendar')
         self.setGeometry(300, 300, 450, 300)
+        self.setupUi(self)
+
+    print("dziala")
+
 
 
 def main():
@@ -27,3 +34,4 @@ def main():
 
 
 main()
+
