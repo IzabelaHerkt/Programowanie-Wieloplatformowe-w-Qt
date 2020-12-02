@@ -1,38 +1,58 @@
 import sys
 
+from UI.loginUI import loginUI
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QDialog, QApplication
-from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QDialog, QApplication, QMessageBox, QLineEdit
+
 from models.User import User
 
+#ukrywanie hasla w QLineEdit nie dziala
+#haslo = QLineEdit()
+#haslo.setEchoMode(QLineEdit.Password)
 
-class Login(QDialog):
-    def __init__(self):
-        super(Login, self).__init__()
-        loadUi("login.ui", self)
+class Login(QDialog, loginUI):
+
+    def __init__(self, parent=None):
+        super(Login, self).__init__(parent)
+        self.setupUi(self)
+
         self.loginbtn.clicked.connect(self.loginF)
         self.exitbtn.clicked.connect(self.exitF)
         Admin = User("admin", "admin")
 
     def loginF(self):
+
         login = self.loginId.text()
         haslo = self.passwordId.text()
-        print(login + haslo)
+
         if login == "admin" and haslo == "admin":
-            print("ok")
+
+            print(f'Login : {login}\nHasło : {haslo}')
+            print("Zalogowano!")
+            #nie zastepuje okna tylko otwiera nowe, zacina sie
             from calendarMenu import CalendarMenu
             calendar = CalendarMenu()
             calendar.main()
 
+        else:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle('Uwaga!')
+            msg.setText('Nieprawidłowy login lub hasło, spróbuj ponownie')
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+
     def exitF(self):
-        print("exit")
+        print("Zamknięto aplikację")
+        sys.exit(1)
+
 
 
 app = QApplication(sys.argv)
 mainwindow = Login()
 widget = QtWidgets.QStackedWidget()
 widget.addWidget(mainwindow)
-widget.setFixedWidth(420)
-widget.setFixedHeight(600)
+widget.setFixedWidth(400)
+widget.setFixedHeight(350)
 widget.show()
 app.exec_()
