@@ -2,15 +2,11 @@ import sys
 
 from UI.loginUI import loginUI
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QDialog, QApplication, QMessageBox, QLineEdit
+from PyQt5.QtWidgets import QDialog, QApplication, QMessageBox
 
 from models.User import User
 from calendar import Calendar
 
-
-# ukrywanie hasla w QLineEdit nie dziala
-# haslo = QLineEdit()
-# haslo.setEchoMode(QLineEdit.Password)
 
 class Login(QDialog, loginUI):
 
@@ -26,9 +22,18 @@ class Login(QDialog, loginUI):
     def loginF(self):
 
         login = self.loginId.text()
-        haslo = self.passwordId.text()
+        haslo = self.loginId.text()
 
-        if login == "admin" and haslo == "admin":
+        filepath = 'admin.txt'
+
+        DELIMITER = " "
+
+        with open(filepath) as fr:
+            for line in fr:
+                loginAdmin = line.split("{}".format(DELIMITER))[0] #czytanie pierwszej kolumny
+                hasloAdmin = line.split("{}".format(DELIMITER))[1] #czytanie drugiej kolumny
+
+        if login == loginAdmin and haslo == hasloAdmin:
 
             print(f'Login : {login}\nHasło : {haslo}')
             print("Zalogowano!")
