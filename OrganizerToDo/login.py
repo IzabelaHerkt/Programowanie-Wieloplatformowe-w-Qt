@@ -21,33 +21,35 @@ class Login(QDialog, loginUI):
 
     def loginF(self):
 
+        notFound = True
         login = self.loginId.text()
-        haslo = self.loginId.text()
+        haslo = self.passwordId.text()
 
-        filepath = 'admin.txt'
+        filepath = 'data.txt'
 
         DELIMITER = " "
 
         with open(filepath) as fr:
             for line in fr:
+
                 loginAdmin = line.split("{}".format(DELIMITER))[0] #czytanie pierwszej kolumny
                 hasloAdmin = line.split("{}".format(DELIMITER))[1] #czytanie drugiej kolumny
 
-        if login == loginAdmin and haslo == hasloAdmin:
+                if login == loginAdmin and haslo == hasloAdmin:
+                    print(f'Login : {login}\nHasło : {haslo}')
+                    print("Zalogowano!")
+                    self.calendar.showApp()
+                    self.hide()
+                    notFound = False
+                    break
 
-            print(f'Login : {login}\nHasło : {haslo}')
-            print("Zalogowano!")
-
-            self.calendar.showApp()
-            self.hide()
-
-        else:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle('Uwaga!')
-            msg.setText('Nieprawidłowy login lub hasło, spróbuj ponownie')
-            msg.setStandardButtons(QMessageBox.Ok)
-            msg.exec_()
+            if notFound:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Information)
+                msg.setWindowTitle('Uwaga!')
+                msg.setText('Nieprawidłowy login lub hasło, spróbuj ponownie')
+                msg.setStandardButtons(QMessageBox.Ok)
+                msg.exec_()
 
     def exitF(self):
         print("Zamknięto aplikację")
