@@ -12,21 +12,36 @@ class Calendar(QWidget, Ui_Form):
     def __init__(self, parent=None):
         super(Calendar, self).__init__(parent)
         self.setupUi(self)
-        self.taskMenu = TaskMenu()
+        self.taskArray = []
         self.calendarWidget.selectionChanged.connect(self.dateSelected)
 
     def showApp(self):
         self.show()
-        print("jest")
 
     def dateSelected(self):
         month = self.calendarWidget.selectedDate().month()
         year = self.calendarWidget.selectedDate().year()
         day = self.calendarWidget.selectedDate().day()
 
-        taskObj = Task(str(day), str(month), str(year), False)
-        self.taskMenu.addTask(taskObj)
-        self.taskMenu.ShowApp()
+        taskH = str(day) + str(month) + str(year)
+
+        newTask = TaskMenu()
+        newTask.addHash(taskH)
+
+        listLen = len(self.taskArray)
+
+        if listLen != 0:
+            for i in range(listLen):
+                if self.taskArray[i].hash == taskH:
+                    self.taskArray[i].ShowApp()
+                    break
+
+                else:
+                    self.taskArray.append(newTask)
+                    self.taskArray[len(self.taskArray)-1].ShowApp()
+        else:
+            self.taskArray.append(newTask)
+            self.taskArray[len(self.taskArray) - 1].ShowApp()
 
 
 if __name__ == '__main__':
