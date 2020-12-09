@@ -14,7 +14,7 @@ class UI_Task(object):
     def setupUi(self, Zadanie):
         Zadanie.setObjectName("Zadanie")
         Zadanie.resize(400, 300)
-        self.listView = QtWidgets.QListView(Zadanie)
+        self.listView = QtWidgets.QListWidget(Zadanie)
         self.listView.setGeometry(QtCore.QRect(10, 40, 191, 221))
         self.listView.setObjectName("listView")
         self.label = QtWidgets.QLabel(Zadanie)
