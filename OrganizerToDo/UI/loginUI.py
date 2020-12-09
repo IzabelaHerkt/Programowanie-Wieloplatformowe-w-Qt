@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QLineEdit
 
 
 class loginUI(object):
@@ -53,6 +54,7 @@ class loginUI(object):
         self.loginId.setObjectName("loginId")
 
         self.passwordId = QtWidgets.QLineEdit(self.widget)
+        self.passwordId.setEchoMode(QLineEdit.Password)
         self.passwordId.setGeometry(QtCore.QRect(50, 125, 211, 35))
         font = QtGui.QFont()
         font.setPointSize(10)
