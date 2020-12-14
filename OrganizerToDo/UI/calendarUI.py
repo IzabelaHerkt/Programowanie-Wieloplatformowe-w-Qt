@@ -13,9 +13,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Calendar")
-        Form.resize(454, 359)
+        Form.resize(500, 360)
         self.calendarWidget = QtWidgets.QCalendarWidget(Form)
-        self.calendarWidget.setGeometry(QtCore.QRect(80, 60, 312, 183))
+        self.calendarWidget.setGeometry(QtCore.QRect(10, 10, 480, 340))
         self.calendarWidget.setObjectName("calendarWidget")
 
         self.retranslateUi(Form)
