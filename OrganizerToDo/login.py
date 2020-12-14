@@ -5,18 +5,19 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QMessageBox
 
 from models.User import User
-from calendar import Calendar
+from ProgressBar import ProgressBarLogin
 
 
 class Login(QDialog, loginUI):
 
     def __init__(self, parent=None):
         super(Login, self).__init__(parent)
-        self.calendar = Calendar()
+        self.progressBar = ProgressBarLogin()
         self.setupUi(self)
 
         self.loginbtn.clicked.connect(self.loginF)
         self.exitbtn.clicked.connect(self.exitF)
+
         Admin = User("admin", "admin")
 
     def loginF(self):
@@ -38,9 +39,13 @@ class Login(QDialog, loginUI):
                 if login == loginAdmin and haslo == hasloAdmin:
                     print(f'Login : {login}\nHasło : {haslo}')
                     print("Zalogowano!")
-                    self.calendar.showApp()
-                    self.hide()
+
                     notFound = False
+
+                    if not notFound:
+                        self.progressBar.showApp()
+                        self.hide()
+
                     break
 
             if notFound:
