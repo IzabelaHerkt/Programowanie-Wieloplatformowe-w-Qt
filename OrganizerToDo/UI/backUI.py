@@ -21,45 +21,24 @@ class Ui_Form(object):
 
         #progressBar
         self.progressBar = QtWidgets.QProgressBar(Form)
-        self.progressBar.setGeometry(QtCore.QRect(60, 250, 300, 60))
-        self.progressBar.setProperty("value", 10)
-        self.progressBar.setStyleSheet("QProgressBar::chunk "
-                          "{"
-                          "background-color: rgb(125, 125, 128);"
-                          "}")
-
+        self.progressBar.setGeometry(QtCore.QRect(60, 250, 0, 0))
+        self.progressBar.setProperty("value", 20)
         self.progressBar.setObjectName("progressBar")
 
         #gif
 
         self.label = QtWidgets.QLabel(Form)
-        self.label.setGeometry(QtCore.QRect(100, 40, 230, 130))
+        self.label.setGeometry(QtCore.QRect(80, 60, 300, 300))
         self.label.setObjectName("label")
 
         # set qmovie as label
-        self.movie = QMovie("book.gif")
+        self.movie = QMovie("loading.gif")
         self.label.setMovie(self.movie)
         self.movie.start()
-
-        #napis
-
-        self.label2 = QtWidgets.QLabel(Form)
-        self.label2.setGeometry(QtCore.QRect(120, 180, 180, 50))
-        font = QtGui.QFont()
-        font.setFamily("Arial Black")
-        font.setPointSize(18)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label2.setFont(font)
-        self.label2.setObjectName("label2")
-
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.label2.setText(_translate("Form", "Ładowanie..."))
 
 
 if __name__ == "__main__":
