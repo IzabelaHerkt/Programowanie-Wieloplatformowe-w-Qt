@@ -1,11 +1,8 @@
-import sys
 
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import QWidget, QMessageBox
-from models.Task import Task
+from PyQt5.QtWidgets import QWidget, QMessageBox, QMenu
 
 from UI.taskUI import UI_Task
-from models.Task import Task
 
 
 class TaskMenu(QWidget, UI_Task):
@@ -35,14 +32,20 @@ class TaskMenu(QWidget, UI_Task):
             msg.setText('Nie wpisales zadnego zadania')
             msg.setStandardButtons(QMessageBox.Ok)
             msg.exec_()
+
         else:
+
             self.Tasks.append(zad)
             self.textEdit.clear()
             icon = QtGui.QIcon('not-done.png')
             item = QtWidgets.QListWidgetItem(icon, str(self.objCounter) + " : " + zad)
             self.listView.insertItem(self.objCounter, item)
-            # self.listView.insertItem(self.objCounter, str(self.objCounter) + " : " + zad)
-            self.objCounter = self.objCounter+1
+            self.objCounter = self.objCounter + 1
+
+            plik = open("zadania.txt", 'a')
+            plik.write("\n " + zad)
+
+            plik.close
 
     def checkZad(self):
         SelectedText = self.listView.currentItem().text()
@@ -55,6 +58,7 @@ class TaskMenu(QWidget, UI_Task):
         zad = self.textEdit.toPlainText()
         if zad != "" and self.listView.currentItem() is not None:
             self.listView.currentItem().setText(zad)
+
         elif self.listView.currentItem() is None:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
@@ -74,6 +78,7 @@ class TaskMenu(QWidget, UI_Task):
         if self.listView.currentItem() is not None:
             self.listView.currentItem().setHidden(True)
             self.textEdit.clear()
+
         else:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
@@ -81,3 +86,22 @@ class TaskMenu(QWidget, UI_Task):
             msg.setText('Nie wybrałeś żadnego elementu')
             msg.setStandardButtons(QMessageBox.Ok)
             msg.exec_()
+
+
+    def contextMenuEvent(self, event):
+        cmenu = QMenu(self)
+
+        newAct = cmenu.addAction('Zrobione')
+
+        action = cmenu.exec_(self.mapToGlobal(event.pos()))
+
+        if self.listView.currentItem() is not None:
+            if action == newAct:
+                SelectedText = self.listView.currentItem().text()
+                self.listView.currentItem().setHidden(True)
+                icon = QtGui.QIcon('done.png')
+                item = QtWidgets.QListWidgetItem(icon, SelectedText)
+                self.listView.insertItem(self.objCounter, item)
+
+                print('Wcisnelam przycisk Zrobione')
+
