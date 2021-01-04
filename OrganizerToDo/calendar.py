@@ -1,7 +1,9 @@
+import os
 import sys
 
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QWidget, QApplication
+from PyQt5.QtWidgets import QWidget, QApplication, QMessageBox, QFileDialog
+from PyQt5.uic.properties import QtGui
 
 from UI.calendarUI import Ui_Form
 from models.Task import Task
@@ -11,9 +13,30 @@ from task import TaskMenu
 class Calendar(QWidget, Ui_Form):
     def __init__(self, parent=None):
         super(Calendar, self).__init__(parent)
+
         self.setupUi(self)
         self.taskArray = []
         self.calendarWidget.selectionChanged.connect(self.dateSelected)
+        self.quitbtn.clicked.connect(self.quit)
+        self.taskbtn.clicked.connect(self.taskFile)
+
+    def taskFile(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, x = QFileDialog.getOpenFileName(self, 'Open File', 'calendar.py', 'Wszystko (*);;Tekst (zadania.txt)',
+                                                  options=options)
+
+        if fileName:
+            fileRead = open(fileName, 'r', encoding='utf-8')
+            print(fileRead.read())
+            fileRead.close()
+
+
+    def quit(self):
+        msg = QMessageBox.question(self, "Wyjscie", "Czy chcesz zamknąć aplikację?",
+                                           QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if msg == QMessageBox.Yes:
+            sys.exit(1)
 
     def showApp(self):
         self.show()
