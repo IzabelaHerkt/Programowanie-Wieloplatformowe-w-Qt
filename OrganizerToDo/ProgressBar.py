@@ -25,7 +25,7 @@ class ProgressBarLogin(QWidget, Ui_Form):
     def TimeCount(self):
         value = self.progressBar.value()
         if value < 100:
-            value = value + 8
+            value = value + 6
             self.progressBar.setValue(value)
         else:
             self.timer.stop()
