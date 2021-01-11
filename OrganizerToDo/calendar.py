@@ -19,15 +19,42 @@ class Calendar(QWidget, Ui_Form):
         self.calendarWidget.selectionChanged.connect(self.dateSelected)
         self.quitbtn.clicked.connect(self.quit)
         self.taskbtn.clicked.connect(self.taskFile)
+        self.addbtn.clicked.connect(self.addFile)
 
-    def taskFile(self):
+    def addFile(self):
+
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, x = QFileDialog.getOpenFileName(self, 'Open File', 'calendar.py', 'Wszystko (*);;Tekst (zadania.txt)',
+
+        input_file, x = QFileDialog.getOpenFileName(self, 'Open File', 'calendar.py', 'Wszystko (*);;Tekst (*)',
                                                   options=options)
+        output_file = "zadania.txt"
+
+        with open(input_file, 'r') as in_file, open(output_file, 'a') as out_file:
+            for line in in_file:
+                out_file.write(line)
+
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowTitle('Komunikat')
+        msg.setText("Dodano zadania!")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec_()
+
+
+    def taskFile(self):
+        #options = QFileDialog.Options()
+        #options |= QFileDialog.DontUseNativeDialog
+        fileName = 'zadania.txt'
 
         if fileName:
             fileRead = open(fileName, 'r', encoding='utf-8')
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle('Zadania do wykonania')
+            msg.setText("Wszystkie zadania:\n" + fileRead.read())
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
             print(fileRead.read())
             fileRead.close()
 
@@ -46,7 +73,9 @@ class Calendar(QWidget, Ui_Form):
         year = self.calendarWidget.selectedDate().year()
         day = self.calendarWidget.selectedDate().day()
 
-        taskH = str(day) + str(month) + str(year)
+        #print(month, year, day)
+
+        taskH = str(day) + "|" + str(month) + "|" + str(year)
 
         newTask = TaskMenu()
         newTask.addHash(taskH)

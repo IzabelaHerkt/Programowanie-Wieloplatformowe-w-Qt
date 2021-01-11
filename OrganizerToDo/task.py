@@ -1,3 +1,4 @@
+import os
 
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import QWidget, QMessageBox, QMenu
@@ -17,6 +18,7 @@ class TaskMenu(QWidget, UI_Task):
         self.objCounter = 0
         self.hash = 0
 
+
     def addTask(self, task):
         self.Tasks.append(str(task.day) + str(task.month) + str(task.year))
 
@@ -25,6 +27,7 @@ class TaskMenu(QWidget, UI_Task):
 
     def addBtn(self):
         zad = self.textEdit.toPlainText()
+
         if zad == "":
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
@@ -34,20 +37,20 @@ class TaskMenu(QWidget, UI_Task):
             msg.exec_()
 
         else:
-
             self.Tasks.append(zad)
             self.textEdit.clear()
             icon = QtGui.QIcon('not-done.png')
-            item = QtWidgets.QListWidgetItem(icon, str(self.objCounter) + " : " + zad)
+            item = QtWidgets.QListWidgetItem(icon, str(self.hash) + " : " + zad)
             self.listView.insertItem(self.objCounter, item)
             self.objCounter = self.objCounter + 1
 
             plik = open("zadania.txt", 'a')
-            plik.write("\n " + zad)
+            plik.write("\n" + str(self.hash) + " : " + zad )
 
             plik.close
 
     def checkZad(self):
+
         SelectedText = self.listView.currentItem().text()
         self.textEdit.setText(SelectedText)
 
@@ -78,6 +81,20 @@ class TaskMenu(QWidget, UI_Task):
         if self.listView.currentItem() is not None:
             self.listView.currentItem().setHidden(True)
             self.textEdit.clear()
+
+           # filepath = 'zadania.txt'
+            #DELIMITER = "\n"
+            #SelectedText = self.listView.currentItem().text()
+            #with open(filepath, 'r+') as f:
+             #   for linia in f.readlines():
+              #      linia = linia.strip()
+
+               #     linia = linia.split("{}".format(DELIMITER))[0]
+                #    print(linia)
+                 #   if linia == SelectedText:
+                  #      f.strip(linia)
+                   #     print('znalezione')
+
 
         else:
             msg = QMessageBox()
