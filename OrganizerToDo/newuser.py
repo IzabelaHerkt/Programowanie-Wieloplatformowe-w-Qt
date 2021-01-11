@@ -1,4 +1,5 @@
 import sys
+import hashlib
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QWidget, QApplication, QMessageBox
@@ -26,6 +27,14 @@ class newUser(QWidget, Ui_Form):
         imie = self.nameId.text()
         nazwisko = self.secondId.text()
 
+        import hashlib
+        hasloHash = hashlib.md5(haslo.encode('utf-8')).hexdigest()
+        print(hasloHash)
+
+        filepath = 'data.txt'
+        notFound = True
+        DELIMITER = " "
+
         if login == "" or haslo == "" or imie == "" or nazwisko == "":
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
@@ -34,17 +43,40 @@ class newUser(QWidget, Ui_Form):
             msg.setStandardButtons(QMessageBox.Ok)
             msg.exec_()
         else:
-            plik = open("data.txt", 'a')
-            plik.write("\n" + login + " " + haslo)
-            plik.close
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle('Uwaga!')
-            msg.setText('Dodano uzytkownika!')
-            msg.setStandardButtons(QMessageBox.Ok)
-            msg.exec_()
-            self.back.showApp()
-            self.hide()
+
+            with open(filepath, 'r') as f:
+                    for linia in f.readlines():
+                        linia = linia.strip()
+
+                        loginCheck = linia.split("{}".format(DELIMITER))[0]
+                        hasloCheck = linia.split("{}".format(DELIMITER))[1]
+
+                        if login == loginCheck or hasloHash == hasloCheck:
+                            notFound = False
+
+                            if not notFound:
+                                msg = QMessageBox()
+                                msg.setIcon(QMessageBox.Information)
+                                msg.setWindowTitle('Uwaga!')
+                                msg.setText('Podany login lub haslo juz istnieje!')
+                                msg.setStandardButtons(QMessageBox.Ok)
+                                msg.exec_()
+
+                            break
+
+                    if notFound:
+                        plik = open("data.txt", 'a')
+                        plik.write("\n" + login + " " + hasloHash)
+                        plik.close()
+                        msg = QMessageBox()
+                        msg.setIcon(QMessageBox.Information)
+                        msg.setWindowTitle('Uwaga!')
+                        msg.setText('Dodano uzytkownika!')
+                        msg.setStandardButtons(QMessageBox.Ok)
+                        msg.exec_()
+                        self.back.showApp()
+                        self.hide()
+
 
 
     def showApp(self):
