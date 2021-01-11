@@ -19,7 +19,7 @@ class Ui_Form(object):
 
         #przycisk wylogowania
         self.quitbtn = QtWidgets.QPushButton(Form)
-        self.quitbtn.setGeometry(QtCore.QRect(400, 210, 100, 210))
+        self.quitbtn.setGeometry(QtCore.QRect(400, 280, 100, 140))
         self.quitbtn.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.quitbtn.setStyleSheet("background-image: url(black.png);border: 1px solid white ;border-radius : 6px; color:white\n""")
         font = QtGui.QFont()
@@ -30,7 +30,7 @@ class Ui_Form(object):
 
         #przycisk do wszystkich zadań
         self.taskbtn = QtWidgets.QPushButton(Form)
-        self.taskbtn.setGeometry(QtCore.QRect(400, 0, 100, 210))
+        self.taskbtn.setGeometry(QtCore.QRect(400, 0, 100, 140))
         self.taskbtn.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.taskbtn.setStyleSheet("background-image: url(black.png);border: 1px solid white ;border-radius : 6px; color:white\n""")
         font = QtGui.QFont()
@@ -39,6 +39,17 @@ class Ui_Form(object):
         self.taskbtn.setFont(font)
         self.taskbtn.setObjectName("taskbtn")
 
+        # przycisk do dodania
+        self.addbtn = QtWidgets.QPushButton(Form)
+        self.addbtn.setGeometry(QtCore.QRect(400, 140, 100, 140))
+        self.addbtn.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.addbtn.setStyleSheet("background-image: url(black.png);border: 1px solid white ;border-radius : 6px; color:white\n""")
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        self.addbtn.setFont(font)
+        self.addbtn.setObjectName("addbtn")
+
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -46,6 +57,7 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Calendar", "Kalendarz"))
         self.quitbtn.setText(_translate("Form", "Zakoncz"))
+        self.addbtn.setText(_translate("Form", "Dodaj\nzadania"))
         self.taskbtn.setText(_translate("Form", "Wszystkie\nzadania"))
 
 

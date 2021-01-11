@@ -9,7 +9,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         self.setFixedSize(QSize(400, 420))
-        Form.setStyleSheet("background-color:#717171")
+        Form.setStyleSheet("background-color:#424242")
 
         # Napis
         self.label = QtWidgets.QLabel(Form)
