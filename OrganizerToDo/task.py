@@ -1,6 +1,7 @@
 import os
 
 from PyQt5 import QtWidgets, QtGui
+from PyQt5.QtCore import QTextCodec
 from PyQt5.QtWidgets import QWidget, QMessageBox, QMenu
 
 from UI.taskUI import UI_Task
@@ -17,7 +18,6 @@ class TaskMenu(QWidget, UI_Task):
         self.pushButton_2.clicked.connect(self.deleteZad)
         self.objCounter = 0
         self.hash = 0
-
 
     def addTask(self, task):
         self.Tasks.append(str(task.day) + str(task.month) + str(task.year))
@@ -44,8 +44,9 @@ class TaskMenu(QWidget, UI_Task):
             self.listView.insertItem(self.objCounter, item)
             self.objCounter = self.objCounter + 1
 
-            plik = open("zadania.txt", 'a')
-            plik.write("\n" + str(self.hash) + " : " + zad )
+            plik = open("zadania.txt", 'a', encoding='utf-8')
+            QTextCodec.setCodecForLocale(QTextCodec.codecForName("UTF-8"))
+            plik.write("\n" + (str(self.hash) + " : " + zad))
 
             plik.close
 
@@ -95,7 +96,6 @@ class TaskMenu(QWidget, UI_Task):
                   #      f.strip(linia)
                    #     print('znalezione')
 
-
         else:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
@@ -103,7 +103,6 @@ class TaskMenu(QWidget, UI_Task):
             msg.setText('Nie wybrałeś żadnego elementu')
             msg.setStandardButtons(QMessageBox.Ok)
             msg.exec_()
-
 
     def contextMenuEvent(self, event):
         cmenu = QMenu(self)
@@ -120,5 +119,5 @@ class TaskMenu(QWidget, UI_Task):
                 item = QtWidgets.QListWidgetItem(icon, SelectedText)
                 self.listView.insertItem(self.objCounter, item)
 
-                print('Wcisnelam przycisk Zrobione')
+                # print('Wcisnelam przycisk Zrobione')
 

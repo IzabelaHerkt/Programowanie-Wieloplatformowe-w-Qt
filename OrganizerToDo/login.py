@@ -1,6 +1,6 @@
 import sys
 
-from PyQt5.QtCore import QSize
+from PyQt5.QtCore import QSize, QTextCodec
 from PyQt5.uic.properties import QtGui
 
 from UI.loginUI import loginUI
@@ -22,7 +22,7 @@ class Login(QDialog, loginUI):
 
         self.loginbtn.clicked.connect(self.loginF)
         self.newbtn.clicked.connect(self.newF)
-
+        QTextCodec.setCodecForLocale(QTextCodec.codecForName("UTF-8"))
         #Admin = User("admin", "admin")
 
     def showApp(self):

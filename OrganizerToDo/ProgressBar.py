@@ -16,7 +16,6 @@ class ProgressBarLogin(QWidget, Ui_Form):
 
         self.timer = QTimer()
 
-
     def showApp(self):
         self.show()
         self.timer.timeout.connect(self.TimeCount)

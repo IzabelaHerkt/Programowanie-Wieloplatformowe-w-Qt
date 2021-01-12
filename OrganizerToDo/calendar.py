@@ -2,6 +2,7 @@ import os
 import sys
 
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import QTextCodec
 from PyQt5.QtWidgets import QWidget, QApplication, QMessageBox, QFileDialog
 from PyQt5.uic.properties import QtGui
 
@@ -13,7 +14,7 @@ from task import TaskMenu
 class Calendar(QWidget, Ui_Form):
     def __init__(self, parent=None):
         super(Calendar, self).__init__(parent)
-
+        QTextCodec.setCodecForLocale(QTextCodec.codecForName("UTF-8"))
         self.setupUi(self)
         self.taskArray = []
         self.calendarWidget.selectionChanged.connect(self.dateSelected)
@@ -30,17 +31,16 @@ class Calendar(QWidget, Ui_Form):
                                                   options=options)
         output_file = "zadania.txt"
 
-        with open(input_file, 'r') as in_file, open(output_file, 'a') as out_file:
-            for line in in_file:
-                out_file.write(line)
-
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setWindowTitle('Komunikat')
-        msg.setText("Dodano zadania!")
-        msg.setStandardButtons(QMessageBox.Ok)
-        msg.exec_()
-
+        if input_file != "":
+            with open(input_file, 'r') as in_file, open(output_file, 'a') as out_file:
+                for line in in_file:
+                    out_file.write(line)
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle('Komunikat')
+            msg.setText("Dodano zadania!")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
 
     def taskFile(self):
         #options = QFileDialog.Options()
@@ -57,7 +57,6 @@ class Calendar(QWidget, Ui_Form):
             msg.exec_()
             print(fileRead.read())
             fileRead.close()
-
 
     def quit(self):
         msg = QMessageBox.question(self, "Wyjscie", "Czy chcesz zamknąć aplikację?",

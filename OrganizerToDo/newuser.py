@@ -2,6 +2,7 @@ import sys
 import hashlib
 
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import QTextCodec
 from PyQt5.QtWidgets import QWidget, QApplication, QMessageBox
 
 from UI.newUI import Ui_Form
@@ -13,7 +14,7 @@ class newUser(QWidget, Ui_Form):
         super(newUser, self).__init__(parent)
         self.back = Back()
         self.setupUi(self)
-
+        QTextCodec.setCodecForLocale(QTextCodec.codecForName("UTF-8"))
         self.backbtn.clicked.connect(self.backF)
         self.addbtn.clicked.connect(self.addF)
 
@@ -76,8 +77,6 @@ class newUser(QWidget, Ui_Form):
                         msg.exec_()
                         self.back.showApp()
                         self.hide()
-
-
 
     def showApp(self):
         self.show()
